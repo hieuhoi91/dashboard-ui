@@ -5,7 +5,7 @@ import Input from '../Common/Input';
 import Checkbox from '../Common/Checkbox';
 import Button from '../Common/Button';
 
-const Login = () => {
+const Register = () => {
   const [isHidden, setHidden] = useState<boolean>();
   const HiddenPassword = () => {
     setHidden(!isHidden);
@@ -19,7 +19,7 @@ const Login = () => {
       <div className="w-[1470px] h-screen flex bg-[#f7f7f9] overflow-hidden">
         <img
           className="scale-90 absolute top-[5%] left-[15%] z-10"
-          src="assets/img/login.png"
+          src="assets/img/register.png"
           alt="Đồi núi"
         />
         <img
@@ -32,15 +32,14 @@ const Login = () => {
         <div className="flex flex-col items-start">
           <div className="flex flex-col items-start pb-6">
             <h2 className="text-2xl font-semibold text-light-text-primary">
-              Welcome to Materialize!👋🏻
+              Adventure starts here 🚀
             </h2>
-
             <p className="text-light-text-secondary">
-              Please sign-in to your account and start the adventure
+              Make your app management easy and fun!
             </p>
           </div>
+          <Input type="text" placeholder="Username" />
           <Input type="text" placeholder="Email" />
-
           <Input type={!isHidden ? 'password' : 'text'} placeholder="Password">
             {!isHidden ? (
               <VisibilityOutlinedIcon
@@ -55,17 +54,15 @@ const Login = () => {
             )}
           </Input>
           <div className="flex w-full justify-between items-center pb-4">
-            <Checkbox content="Remember me" />
+            <Checkbox content="I agree to privacy policy & terms" />
             <span>
-              <a href="/" className="text-a text-xs">
-                Forgot Password?
-              </a>
+              <a href="/" className="text-a text-xs"></a>
             </span>
           </div>
           <Button
             large
             className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
-            title="LOGIN"
+            title="Register"
           />
         </div>
       </div>
@@ -73,4 +70,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
