@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import Button from '../Common/Button';
+import Checkbox from '../Common/Checkbox';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import Input from '../Common/Input';
-import Checkbox from '../Common/Checkbox';
-import Button from '../Common/Button';
+import Social from '../Common/Social';
 
 const Login = () => {
   const [isHidden, setHidden] = useState<boolean>();
@@ -67,6 +68,17 @@ const Login = () => {
             className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
             title="LOGIN"
           />
+          <div className="relative py-4 mb-8 w-full border-b border-gray-300 border-solid">
+            <p className="absolute my-4  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 bg-white flex justify-center text-gray-400">
+              or
+            </p>
+          </div>
+          <Social>
+            <img src="assets/svg/fb.svg" alt="" />
+            <img src="assets/svg/twitter.svg" alt="" />
+            <img src="assets/svg/github.svg" alt="" />
+            <img src="assets/svg/google.svg" alt="" />
+          </Social>
         </div>
       </div>
     </div>

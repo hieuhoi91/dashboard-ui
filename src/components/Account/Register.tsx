@@ -4,6 +4,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import Input from '../Common/Input';
 import Checkbox from '../Common/Checkbox';
 import Button from '../Common/Button';
+import Social from '../Common/Social';
 
 const Register = () => {
   const [isHidden, setHidden] = useState<boolean>();
@@ -18,7 +19,7 @@ const Register = () => {
       </span>
       <div className="w-[1470px] h-screen flex bg-[#f7f7f9] overflow-hidden">
         <img
-          className="scale-90 absolute top-[5%] left-[15%] z-10"
+          className="absolute top-[10%] left-[15%] z-10"
           src="assets/img/register.png"
           alt="Đồi núi"
         />
@@ -64,6 +65,17 @@ const Register = () => {
             className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
             title="Register"
           />
+          <div className="relative py-4 mb-8 w-full border-b border-gray-300 border-solid">
+            <p className="absolute my-4  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 bg-white flex justify-center text-gray-400">
+              or
+            </p>
+          </div>
+          <Social>
+            <img src="assets/svg/fb.svg" alt="" />
+            <img src="assets/svg/twitter.svg" alt="" />
+            <img src="assets/svg/github.svg" alt="" />
+            <img src="assets/svg/google.svg" alt="" />
+          </Social>
         </div>
       </div>
     </div>
