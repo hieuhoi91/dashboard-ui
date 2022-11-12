@@ -1,16 +1,36 @@
-import { useState } from 'react';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import Button from '../Common/Button';
-import Checkbox from '../Common/Checkbox';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import Input from '../Common/Input';
-import Social from '../Common/Social';
+import { useState } from "react";
+import { CircularProgress } from "react-cssfx-loading";
+import { Link, useNavigate } from "react-router-dom";
+
+import { CmsApi } from "../../api/cms-api";
+import { Platform } from "../../shared/enum/platform";
+import Button from "../Common/Button";
+import Checkbox from "../Common/Checkbox";
+import Input from "../Common/Input";
+import Social from "../Common/Social";
 
 const Login = () => {
-  const [isHidden, setHidden] = useState<boolean>();
-  const HiddenPassword = () => {
-    setHidden(!isHidden);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+
+    try {
+      const res = await CmsApi.login({ email, password, requestFrom: Platform.CMS });
+
+      navigate("/", { replace: true });
+    } catch (error: any) {
+      console.log(error);
+
+      setErrorMessage(error.response.data.message);
+    }
+    setIsLoading(false);
   };
+
   return (
     <div className="w-full h-screen flex items-start">
       <span className="absolute flex items-center gap-2 top-4 left-8 w-10 h-10">
@@ -40,21 +60,20 @@ const Login = () => {
               Please sign-in to your account and start the adventure
             </p>
           </div>
-          <Input type="text" placeholder="Email" />
-
-          <Input type={!isHidden ? 'password' : 'text'} placeholder="Password">
-            {!isHidden ? (
-              <VisibilityOutlinedIcon
-                className="text-gray-400"
-                onClick={HiddenPassword}
-              />
-            ) : (
-              <VisibilityOffOutlinedIcon
-                className="text-gray-400"
-                onClick={HiddenPassword}
-              />
-            )}
-          </Input>
+          <Input
+            type="text"
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <Input
+            placeholder="Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            eyeEnable={true}
+          ></Input>
           <div className="flex w-full justify-between items-center pb-4">
             <Checkbox content="Remember me" />
             <span>
@@ -63,11 +82,25 @@ const Login = () => {
               </a>
             </span>
           </div>
-          <Button
-            large
-            className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
-            title="LOGIN"
-          />
+
+          {!isLoading ? (
+            <Button
+              large
+              className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
+              title="LOGIN"
+              onClick={handleLogin}
+            />
+          ) : (
+            <span className=" w-full gap-2 flex justify-center items-center">
+              <CircularProgress
+                className="text-light-primary-main"
+                width="30px"
+                height="30px"
+                duration="3s"
+              />
+            </span>
+          )}
+          {errorMessage && <span className="text-light-error text-sm pt-2">{errorMessage}</span>}
           <div className="relative py-4 mb-8 w-full border-b border-gray-300 border-solid">
             <p className="absolute my-4  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 bg-white flex justify-center text-gray-400">
               or

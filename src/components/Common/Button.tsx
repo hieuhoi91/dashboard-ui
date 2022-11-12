@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 
-interface IButton {
+interface IButton extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   title: string;
   small?: boolean;
   large?: boolean;
@@ -8,21 +8,25 @@ interface IButton {
   className?: string;
 }
 
-const Button: FC<IButton> = ({ title, small, large, className = '' }) => {
+const Button: FC<IButton> = ({ title, small, large, className = "", onClick }) => {
   const width = () => {
     if (small) {
-      return 'w-6';
+      return "w-6";
     } else if (large) {
-      return 'w-full h-[42px] ';
+      return "w-full h-[42px] ";
     }
-    return '';
+    return "";
   };
 
   const getClassName = () => {
-    return width() + ' ' + className;
+    return width() + " " + className;
   };
 
-  return <button className={`${getClassName()}`}>{title}</button>;
+  return (
+    <button onClick={onClick} className={`${getClassName()}`}>
+      {title}
+    </button>
+  );
 };
 
 export default Button;
