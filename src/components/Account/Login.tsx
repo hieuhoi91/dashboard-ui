@@ -112,6 +112,12 @@ const Login = () => {
             <img src="assets/svg/github.svg" alt="" />
             <img src="assets/svg/google.svg" alt="" />
           </Social>
+          <div className="w-full flex justify-center items-center gap-4 my-4 text-xs">
+            <p>New on our platform?</p>
+            <Link to="/register" className="text-light-primary-main">
+              Create an account
+            </Link>
+          </div>
         </div>
       </div>
     </div>

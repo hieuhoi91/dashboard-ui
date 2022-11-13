@@ -1,14 +1,14 @@
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { useState } from "react";
 import { CircularProgress } from "react-cssfx-loading";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { CmsApi } from "../../api/cms-api";
 import Button from "../Common/Button";
 import Checkbox from "../Common/Checkbox";
 import Input from "../Common/Input";
 import Social from "../Common/Social";
+
+//FIXME:logic login khi web sap
 
 const Register = () => {
   const [username, setUsername] = useState<string>("");
@@ -17,10 +17,6 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [isHidden, setHidden] = useState<boolean>();
-  const HiddenPassword = () => {
-    setHidden(!isHidden);
-  };
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -30,8 +26,6 @@ const Register = () => {
 
       navigate("/login", { replace: true });
     } catch (error: any) {
-      console.log(error);
-
       setErrorMessage(error.response.data.message);
     }
     setIsLoading(false);
@@ -65,17 +59,10 @@ const Register = () => {
           <Input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
           <Input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
           <Input
-            type={!isHidden ? "password" : "text"}
             placeholder="Password"
             eyeEnable={true}
-            onChange={(e) => setUsername(e.target.value)}
-          >
-            {!isHidden ? (
-              <VisibilityOutlinedIcon className="text-gray-400" onClick={HiddenPassword} />
-            ) : (
-              <VisibilityOffOutlinedIcon className="text-gray-400" onClick={HiddenPassword} />
-            )}
-          </Input>
+            onChange={(e) => setPassword(e.target.value)}
+          ></Input>
           <div className="flex w-full justify-between items-center pb-4">
             <Checkbox content="I agree to privacy policy & terms" />
             <span>
@@ -104,6 +91,12 @@ const Register = () => {
             <p className="absolute my-4  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 bg-white flex justify-center text-gray-400">
               or
             </p>
+          </div>
+          <div className="w-full flex justify-center items-center gap-4 mb-4 text-xs">
+            <p>Already have an account?</p>
+            <Link to="/login" className="text-light-primary-main">
+              Sign in instead
+            </Link>
           </div>
           <Social>
             <img src="assets/svg/fb.svg" alt="" />

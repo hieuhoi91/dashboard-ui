@@ -11,7 +11,7 @@ interface IInput {
 }
 
 const Input: FC<IInput> = (props) => {
-  const [isHidden, setHidden] = useState<boolean>();
+  const [isHidden, setHidden] = useState<boolean>(false);
 
   const HiddenPassword = () => {
     setHidden(!isHidden);
