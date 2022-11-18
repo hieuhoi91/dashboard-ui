@@ -2,11 +2,11 @@ import { useState } from "react";
 import { CircularProgress } from "react-cssfx-loading";
 import { Link, useNavigate } from "react-router-dom";
 
-import { CmsApi } from "../../api/cms-api";
-import Button from "../Common/Button";
-import Checkbox from "../Common/Checkbox";
-import Input from "../Common/Input";
-import Social from "../Common/Social";
+import { CmsApi } from "../api/cms-api";
+import Button from "../components/Common/Button";
+import Checkbox from "../components/Common/Checkbox";
+import Input from "../components/Common/Input";
+import Social from "../components/Common/Social";
 
 //FIXME:logic login khi web sap
 
@@ -71,6 +71,7 @@ const Register = () => {
           </div>
           {!isLoading ? (
             <Button
+              type="submit"
               large
               className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
               title="Register"

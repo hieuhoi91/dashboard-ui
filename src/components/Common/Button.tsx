@@ -1,29 +1,31 @@
 import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 
-interface IButton extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface IButton
+  extends DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   title: string;
   small?: boolean;
   large?: boolean;
-  color?: string;
-  className?: string;
 }
+// { title, small, large, className = "", onClick, type }
 
-const Button: FC<IButton> = ({ title, small, large, className = "", onClick }) => {
+const Button: FC<IButton> = (props) => {
+  const { title, small, large, ...parentAttributes } = props;
+
   const width = () => {
-    if (small) {
+    if (props.small) {
       return "w-6";
-    } else if (large) {
+    } else if (props.large) {
       return "w-full h-[42px] ";
     }
     return "";
   };
 
   const getClassName = () => {
-    return width() + " " + className;
+    return width() + " " + props.className;
   };
 
   return (
-    <button onClick={onClick} className={`${getClassName()}`}>
+    <button {...parentAttributes} className={`${getClassName()}`}>
       {title}
     </button>
   );

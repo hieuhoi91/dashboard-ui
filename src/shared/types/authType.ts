@@ -9,6 +9,11 @@ export interface ReqLogin {
   requestFrom: string;
 }
 
+export interface LoginParams {
+  reqLogin: ReqLogin;
+  callback: any;
+}
+
 export interface Token {
   access_token: string;
   refresh_token: string;
