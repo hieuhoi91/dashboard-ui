@@ -3,8 +3,8 @@ import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
 
 import PrivateRoute from "./components/RequireAuth/PrivateRoute";
-import { Dashboard } from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Main from "./pages/Main";
 import Register from "./pages/Register";
 import { history } from "./utils/history";
 
@@ -44,7 +44,7 @@ const App = () => {
           path="/"
           element={
             <PrivateRoute>
-              <Dashboard></Dashboard>
+              <Main />
             </PrivateRoute>
           }
         />

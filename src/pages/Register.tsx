@@ -1,35 +1,43 @@
-import { useState } from "react";
+import { useFormik } from "formik";
 import { CircularProgress } from "react-cssfx-loading";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import * as Yup from "yup";
 
-import { CmsApi } from "../api/cms-api";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Button from "../components/Common/Button";
 import Checkbox from "../components/Common/Checkbox";
 import Input from "../components/Common/Input";
 import Social from "../components/Common/Social";
-
-//FIXME:logic login khi web sap
+import { register, selectIsLoadingRegister, selectRegisterError } from "../features/auth/authSlice";
+import { ReqRegister } from "../shared/types/authType";
 
 const Register = () => {
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const isLoading = useAppSelector(selectIsLoadingRegister);
+  const error = useAppSelector(selectRegisterError);
+  const initialValues: ReqRegister = { username: "", email: "", password: "" };
 
-  const handleLogin = async () => {
-    setIsLoading(true);
+  const dispatch = useAppDispatch();
+  const formik = useFormik({
+    initialValues: initialValues,
 
-    try {
-      const res = await CmsApi.register({ username, email, password });
+    onSubmit: (values) => {
+      console.log(values);
 
-      navigate("/login", { replace: true });
-    } catch (error: any) {
-      setErrorMessage(error.response.data.message);
-    }
-    setIsLoading(false);
-  };
+      const reqRegister = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+
+      dispatch(register(reqRegister));
+    },
+
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email("Invalid email address.").required("You must enter your email."),
+      password: Yup.string().required("You must enter your password."),
+    }),
+  });
+
   return (
     <div className="w-full h-screen flex items-start">
       <span className="absolute flex items-center gap-2 top-4 left-8 w-10 h-10">
@@ -56,38 +64,72 @@ const Register = () => {
             </h2>
             <p className="text-light-text-secondary">Make your app management easy and fun!</p>
           </div>
-          <Input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-          <Input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-          <Input
-            placeholder="Password"
-            eyeEnable={true}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Input>
-          <div className="flex w-full justify-between items-center pb-4">
-            <Checkbox content="I agree to privacy policy & terms" />
-            <span>
-              <a href="/" className="text-a text-xs"></a>
-            </span>
-          </div>
-          {!isLoading ? (
-            <Button
-              type="submit"
-              large
-              className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
-              title="Register"
-              onClick={handleLogin}
+          <form onSubmit={formik.handleSubmit} className="w-full">
+            <Input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Username"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.username}
             />
-          ) : (
-            <span className=" w-full gap-2 flex justify-center items-center">
-              <CircularProgress
-                className="text-light-primary-main"
-                width="30px"
-                height="30px"
-                duration="3s"
+            {formik.touched.username && formik.errors.username ? (
+              <div className="text-light-error text-sm">{formik.errors.username}</div>
+            ) : null}
+
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="text-light-error text-sm">{formik.errors.email}</div>
+            ) : null}
+
+            <Input
+              id="password"
+              name="password"
+              placeholder="Password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              eyeEnable={true}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div className="text-light-error text-sm">{formik.errors.password}</div>
+            ) : null}
+
+            <div className="flex w-full justify-between items-center pt-2 pb-4">
+              <Checkbox content="I agree to privacy policy & terms" />
+              <span>
+                <a href="/" className="text-a text-xs"></a>
+              </span>
+            </div>
+
+            {!isLoading ? (
+              <Button
+                type="submit"
+                large
+                className="bg-light-primary-light rounded-lg text-white hover:shadow-lg hover:bg-light-primary-main text-sm"
+                title="Register"
               />
-            </span>
-          )}
-          {errorMessage && <span className="text-light-error text-sm pt-2">{errorMessage}</span>}
+            ) : (
+              <span className=" w-full gap-2 flex justify-center items-center">
+                <CircularProgress
+                  className="text-light-primary-main"
+                  width="30px"
+                  height="30px"
+                  duration="3s"
+                />
+              </span>
+            )}
+          </form>
+          {error && <span className="text-light-error text-sm pt-2">{error}</span>}
           <div className="relative py-4 mb-8 w-full border-b border-gray-300 border-solid">
             <p className="absolute my-4  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 bg-white flex justify-center text-gray-400">
               or

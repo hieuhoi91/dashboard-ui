@@ -1,26 +1,23 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CircularProgress } from "react-cssfx-loading";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-import { CmsApi } from "../api/cms-api";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Button from "../components/Common/Button";
 import Checkbox from "../components/Common/Checkbox";
 import Input from "../components/Common/Input";
+import Logo from "../components/Common/Logo";
 import Social from "../components/Common/Social";
-import { selectIsLoading, selectLoginError } from "../features/auth/authSlice";
+import { selectIsLoadingLogin, selectLoginError } from "../features/auth/authSlice";
 import { login } from "../features/auth/authSlice";
 import { Platform } from "../shared/enum/platform";
 import { ReqLogin } from "../shared/types/authType";
 import { GetAuth } from "../utils/checkAuth";
 
 const Login = () => {
-  // const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const navigate = useNavigate();
-  const isLoading = useAppSelector(selectIsLoading);
+  const isLoading = useAppSelector(selectIsLoadingLogin);
   const error = useAppSelector(selectLoginError);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -35,28 +32,12 @@ const Login = () => {
     initialValues: initialValues,
 
     onSubmit: (values) => {
-      console.log(values);
       const reqLogin = {
         email: values.email,
         password: values.password,
         requestFrom: values.requestFrom,
       };
       dispatch(login(reqLogin));
-      // setIsLoading(true);
-      // setErrorMessage(null);
-      // try {
-      //   const res = await CmsApi.login({
-      //     email: values.email,
-      //     password: values.password,
-      //     requestFrom: values.requestFrom,
-      //   });
-      //   navigate("/", { replace: true });
-      // } catch (error: any) {
-      //   console.log(error);
-      //   const errorMessage = error.response ? error.response.data.message : "Co loi xay ra";
-      //   setErrorMessage(errorMessage);
-      // }
-      // setIsLoading(false);
     },
 
     validationSchema: Yup.object().shape({
@@ -67,10 +48,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex items-start">
-      <span className="absolute flex items-center gap-2 top-4 left-8 w-10 h-10">
-        <img src="assets/img/logo.svg" alt="" className="w-full h-full" />
-        <p className="font-bold text-2xl text-[#636578]">Materialize</p>
-      </span>
+      <Logo className="absolute top-4 left-8" />
       <div className="w-[1470px] h-screen flex bg-[#f7f7f9] overflow-hidden">
         <img
           className="scale-90 absolute top-[5%] left-[15%] z-10"

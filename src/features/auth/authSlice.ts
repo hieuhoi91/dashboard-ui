@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "../../app/store";
-import { ReqLogin, Token, User } from "../../shared/types/authType";
+import { ReqLogin, ReqRegister, Token, User } from "../../shared/types/authType";
 
 interface InitialState {
   user: User | null;
@@ -48,15 +48,28 @@ const authSlice = createSlice({
 
     logout(state) {
       state.isLoggedIn = false;
+      state.login.loading = false;
       state.user = null;
+    },
+
+    register(state, action: PayloadAction<ReqRegister>) {
+      state.isLoggedIn = false;
+      state.register.loading = true;
+    },
+
+    registerFailed(state, action: PayloadAction<string>) {
+      state.register.error = action.payload;
+      state.register.loading = false;
     },
   },
 });
 
-export const { login, loginFailed, logout } = authSlice.actions;
+export const { login, loginFailed, logout, register, registerFailed } = authSlice.actions;
 
 export const selectAuth = (state: RootState) => state.auth;
-export const selectIsLoading = (state: RootState) => state.auth.login.loading;
+export const selectIsLoadingLogin = (state: RootState) => state.auth.login.loading;
 export const selectLoginError = (state: RootState) => state.auth.login.error;
+export const selectIsLoadingRegister = (state: RootState) => state.auth.register.loading;
+export const selectRegisterError = (state: RootState) => state.auth.register.error;
 
 export default authSlice.reducer;

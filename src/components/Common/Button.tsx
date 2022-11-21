@@ -13,7 +13,7 @@ const Button: FC<IButton> = (props) => {
 
   const width = () => {
     if (props.small) {
-      return "w-6";
+      return "w-[20%] h-[60px]";
     } else if (props.large) {
       return "w-full h-[42px] ";
     }
