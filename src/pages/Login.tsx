@@ -25,7 +25,7 @@ const Login = () => {
   const initialValues: ReqLogin = { email: "", password: "", requestFrom: Platform.CMS };
   useEffect(() => {
     if (GetAuth()) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, []);
   const formik = useFormik({

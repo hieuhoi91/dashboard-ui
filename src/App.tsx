@@ -3,8 +3,10 @@ import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
 
 import PrivateRoute from "./components/RequireAuth/PrivateRoute";
+import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Main from "./pages/Main";
+import CRM from "./pages/Menu/CRM";
+import ECommerce from "./pages/Menu/ECommerce";
 import Register from "./pages/Register";
 import { history } from "./utils/history";
 
@@ -41,13 +43,16 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <PrivateRoute>
-              <Main />
+              <Dashboard />
             </PrivateRoute>
           }
-        />
+        >
+          <Route path="/dashboard/ecommerce" element={<ECommerce />} />
+          <Route path="/dashboard/crm" element={<CRM />} />
+        </Route>
       </Routes>
     </HistoryRouter>
   );

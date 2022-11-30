@@ -2,24 +2,24 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { FC, useState } from "react";
 
-import ListCategory from "./ListItem";
+import Menu from "./ListItem";
 
 export interface IRoutes {
   path: string;
   extract?: boolean;
-  main: React.ReactNode;
+  label: React.ReactNode;
 }
 
-interface ICategory
+interface INavMenu
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
   isEnableArrowIcon: boolean;
   labelIcon: React.ReactNode;
-  items: IRoutes[];
+  listRoutes: IRoutes[];
 }
 
-const Category: FC<ICategory> = (props) => {
-  const { title, isEnableArrowIcon, labelIcon, items, ...attrs } = props;
+const NavMenu: FC<INavMenu> = (props) => {
+  const { title, isEnableArrowIcon, labelIcon, listRoutes: items, ...attrs } = props;
   const [isHidden, setIsHidden] = useState(false);
 
   const handleHidden = () => {
@@ -27,8 +27,11 @@ const Category: FC<ICategory> = (props) => {
   };
 
   return (
-    <div className="w-full px-3 py-2">
-      <div className=" flex justify-between items-center py-2" onClick={handleHidden}>
+    <div className="w-full px-3 pb-2">
+      <div
+        className={attrs.className + " flex justify-between items-center py-2 px-4 mb-2 rounded-lg"}
+        onClick={handleHidden}
+      >
         <div className="flex gap-2 items-center">
           <span>{labelIcon}</span>
           <span>{title}</span>
@@ -44,7 +47,7 @@ const Category: FC<ICategory> = (props) => {
       {isHidden ? (
         <div className="flex flex-col">
           {items.map((item) => (
-            <ListCategory title={item} />
+            <Menu route={item} />
           ))}
         </div>
       ) : null}
@@ -52,4 +55,4 @@ const Category: FC<ICategory> = (props) => {
   );
 };
 
-export default Category;
+export default NavMenu;
