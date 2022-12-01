@@ -8,7 +8,7 @@ import { CmsApi } from "../../api/cms-api";
 import { useAppDispatch } from "../../app/hooks";
 import { Category } from "../../shared/types/categoryType";
 import { ReqItem } from "../../shared/types/itemType";
-import Alert from "../Common/ALert";
+import Alert from "../Common/Alert";
 import Button from "../Common/Button";
 import Editor from "../Common/Editor/Editor";
 import Input from "../Common/Input";
