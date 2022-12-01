@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import CRM from "./pages/Menu/CRM";
 import ECommerce from "./pages/Menu/ECommerce";
+import Roles from "./pages/Menu/Roles";
 import Register from "./pages/Register";
 import { history } from "./utils/history";
 
@@ -52,6 +53,17 @@ const App = () => {
         >
           <Route path="/dashboard/ecommerce" element={<ECommerce />} />
           <Route path="/dashboard/crm" element={<CRM />} />
+        </Route>
+        <Route
+          path="/roles-permission"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
+          <Route path="/roles-permission/roles" element={<Roles />} />
+          <Route path="/roles-permission/permissions" element={<CRM />} />
         </Route>
       </Routes>
     </HistoryRouter>

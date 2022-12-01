@@ -15,6 +15,7 @@ module.exports = {
             secondary: "rgba(76, 78, 100, 0.68)",
           },
           error: "#ff0e00",
+          borderColor: "rgba(0, 0, 0, 0.23)",
         },
       },
     },

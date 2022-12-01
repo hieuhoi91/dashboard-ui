@@ -32,9 +32,9 @@ const NavMenu: FC<INavMenu> = (props) => {
         className={attrs.className + " flex justify-between items-center py-2 px-4 mb-2 rounded-lg"}
         onClick={handleHidden}
       >
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center whitespace-nowrap">
           <span>{labelIcon}</span>
-          <span>{title}</span>
+          <span className="">{title}</span>
         </div>
         {isEnableArrowIcon ? (
           !isHidden ? (

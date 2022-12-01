@@ -1,3 +1,4 @@
+import { LockOpen } from "@mui/icons-material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import WidgetsIcon from "@mui/icons-material/Widgets";
@@ -16,6 +17,18 @@ const ListLabels = [
   {
     path: "/dashboard/crm",
     label: "CRM",
+  },
+];
+
+const ListRolesPermisstionLabels = [
+  {
+    path: "/roles-permission/roles",
+    exact: true,
+    label: "Roles",
+  },
+  {
+    path: "/roles-permission/permissions",
+    label: "Permissions",
   },
 ];
 
@@ -40,6 +53,13 @@ const Dashboard = () => {
           title="Dashboard"
           isEnableArrowIcon={true}
           listRoutes={ListLabels}
+        />
+        <NavMenu
+          // className="bg-light-background-hover"
+          labelIcon={<LockOpen />}
+          title="Roles & Permissions"
+          isEnableArrowIcon={true}
+          listRoutes={ListRolesPermisstionLabels}
         />
       </div>
       <div className="w-full bg-white">
