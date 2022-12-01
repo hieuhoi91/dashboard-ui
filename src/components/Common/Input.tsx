@@ -9,22 +9,23 @@ interface IInput
 
 const Input: FC<IInput> = (props) => {
   const [isHidden, setHidden] = useState<boolean>(false);
-  const { type, eyeEnable, ...parentAttributes } = props;
+  const { type, eyeEnable, className, ...parentAttributes } = props;
   const HiddenPassword = () => {
     setHidden(!isHidden);
   };
   const getType = () => {
     if (type) {
+      return type;
     } else {
-      return !isHidden ? "password" : "text";
+      return !isHidden ? "password" : props.type;
     }
   };
 
   return (
-    <div className="w-full h-[56px] rounded-lg  mt-4 flex items-center relative  justify-between border-gray-300 border-solid border">
+    <div className="w-full h-[56px] rounded-lg  mb-4 flex items-center justify-between relative border-gray-300 border-solid border">
       <input
         {...parentAttributes}
-        className="w-full h-full px-3 outline-none rounded-lg"
+        className={" w-full h-full px-3 outline-none rounded-lg"}
         type={getType()}
       />
       {eyeEnable ? (

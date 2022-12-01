@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.1.36:3000";
+const API_URL = "http://192.168.1.41:3000";
 
 axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use(

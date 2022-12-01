@@ -73,7 +73,7 @@ const Login = () => {
             </p>
           </div>
 
-          <form onSubmit={formik.handleSubmit} className="w-full">
+          <form onSubmit={formik.handleSubmit} className="w-full ">
             <Input
               id="email"
               name="email"

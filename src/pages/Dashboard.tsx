@@ -42,7 +42,7 @@ const Dashboard = () => {
           listRoutes={ListLabels}
         />
       </div>
-      <div className="w-full bg-white">
+      <div className="w-full flex flex-col">
         <Search />
         <Outlet />
       </div>

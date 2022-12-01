@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "id": "052015bf-3749-4b37-bedb-0f39b5fe16e4",
+      "created_at": "2022-11-12T17:25:14.684Z",
+      "updated_at": "2022-11-12T17:25:14.684Z",
+      "image": "test",
+      "name": "test",
+      "description": "test",
+      "parentId": null,
+      "slug": "test",
+      "status": "ACTIVE",
+      "children": null
+    },
+    {
+      "id": "db930517-063b-4aa2-967d-e650ad3630c0",
+      "created_at": "2022-11-12T17:25:14.684Z",
+      "updated_at": "2022-11-12T17:25:14.684Z",
+      "image": "test",
+      "name": "test",
+      "description": "test",
+      "parentId": null,
+      "slug": "test",
+      "status": "ACTIVE",
+      "children": null
+    },
+    {
+      "id": "1ba8363b-9108-49a7-8cec-23fd384dfd72",
+      "created_at": "2022-11-12T17:25:14.684Z",
+      "updated_at": "2022-11-12T17:25:14.684Z",
+      "image": "test",
+      "name": "test",
+      "description": "test",
+      "parentId": "052015bf-3749-4b37-bedb-0f39b5fe16e4",
+      "slug": "test",
+      "status": "ACTIVE",
+      "children": {
+        "id": "052015bf-3749-4b37-bedb-0f39b5fe16e4",
+        "created_at": "2022-11-12T17:25:14.684Z",
+        "updated_at": "2022-11-12T17:25:14.684Z",
+        "image": "test",
+        "name": "test",
+        "description": "test",
+        "parentId": null,
+        "slug": "test",
+        "status": "ACTIVE"
+      }
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "take": 3,
+    "itemCount": 3,
+    "pageCount": 1,
+    "hasPreviousPage": false,
+    "hasNextPage": false
+  },
+  "message": "Success"
+}

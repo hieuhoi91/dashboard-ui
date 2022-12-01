@@ -33,6 +33,7 @@ const Register = () => {
     },
 
     validationSchema: Yup.object().shape({
+      username: Yup.string().required("You must enter your username."),
       email: Yup.string().email("Invalid email address.").required("You must enter your email."),
       password: Yup.string().required("You must enter your password."),
     }),
@@ -64,7 +65,7 @@ const Register = () => {
             </h2>
             <p className="text-light-text-secondary">Make your app management easy and fun!</p>
           </div>
-          <form onSubmit={formik.handleSubmit} className="w-full">
+          <form onSubmit={formik.handleSubmit} className="w-full flex flex-col gap-4">
             <Input
               id="username"
               name="username"

@@ -2,11 +2,11 @@ import { BrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
 
+import CRM from "./components/Dashboard/CRM";
+import ECommerce from "./components/Dashboard/ECommerce";
 import PrivateRoute from "./components/RequireAuth/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import CRM from "./pages/Menu/CRM";
-import ECommerce from "./pages/Menu/ECommerce";
 import Register from "./pages/Register";
 import { history } from "./utils/history";
 
