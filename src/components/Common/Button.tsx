@@ -9,7 +9,7 @@ interface IButton
 // { title, small, large, className = "", onClick, type }
 
 const Button: FC<IButton> = (props) => {
-  const { title, small, large, ...parentAttributes } = props;
+  const { title, small, large, children, ...parentAttributes } = props;
 
   const width = () => {
     if (props.small) {
@@ -26,6 +26,7 @@ const Button: FC<IButton> = (props) => {
 
   return (
     <button {...parentAttributes} className={`${getClassName()}`}>
+      <span>{children}</span>
       {title}
     </button>
   );

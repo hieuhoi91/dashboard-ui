@@ -8,6 +8,7 @@ export interface IRoutes {
   path: string;
   extract?: boolean;
   label: React.ReactNode;
+  idx?: number;
 }
 
 interface INavMenu
@@ -25,13 +26,12 @@ const NavMenu: FC<INavMenu> = (props) => {
   const handleHidden = () => {
     setIsHidden(!isHidden);
   };
-
+  const a = isHidden
+    ? " flex justify-between items-center py-2 px-4 mb-2 rounded-lg cursor-pointer bg-light-background-hover"
+    : " flex justify-between items-center py-2 px-4 mb-2 rounded-lg cursor-pointer bg-light-background-body";
   return (
-    <div className="w-full px-3 pb-2">
-      <div
-        className={attrs.className + " flex justify-between items-center py-2 px-4 mb-2 rounded-lg"}
-        onClick={handleHidden}
-      >
+    <div className="w-full px-3 pb-2 ">
+      <div className={attrs.className + a} onClick={handleHidden}>
         <div className="flex gap-2 items-center whitespace-nowrap">
           <span>{labelIcon}</span>
           <span className="">{title}</span>
@@ -46,8 +46,8 @@ const NavMenu: FC<INavMenu> = (props) => {
       </div>
       {isHidden ? (
         <div className="flex flex-col">
-          {items.map((item) => (
-            <Menu route={item} />
+          {items.map((item, idx) => (
+            <Menu route={{ idx, ...item }} />
           ))}
         </div>
       ) : null}

@@ -2,14 +2,14 @@ import createSagaMiddleware from "@redux-saga/core";
 import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "../features/auth/authSlice";
-import itemReducer from "../features/items/itemSlice";
+import dashboardRouteReducer from "../features/dashboard/dashboardRouteSlice";
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    items: itemReducer,
+    dashboardRoute: dashboardRouteReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

@@ -7,6 +7,7 @@ export interface ReqItem {
   categoryId: string;
   quantity: number;
   sku: string;
+  active: boolean;
 }
 
 export interface ResItem {
