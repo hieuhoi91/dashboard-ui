@@ -1,9 +1,11 @@
 import { IosShare } from "@mui/icons-material";
+import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CmsApi } from "../../api/cms-api";
+import { ReqSearch } from "../../shared/types/itemType";
 import { ResGetRoles, ResGetUsers, ResRoles, User } from "../../shared/types/rolesType";
 import { RoleCard } from "../Common/RoleCard";
 
@@ -14,10 +16,38 @@ const listImg = [
   "https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png",
 ];
 
-const Title = ({ width, title, isLast }: { width: string; title: string; isLast?: boolean }) => {
+const Title = ({
+  width,
+  title,
+  isLast,
+  handleSort,
+}: {
+  width: string;
+  title: string;
+  isLast?: boolean;
+  handleSort?: any;
+}) => {
+  const [hiddenSort, setHiddenSort] = useState<boolean>(false);
+
+  const handleHiddenSort = () => {
+    setHiddenSort(!hiddenSort);
+  };
+
   return (
-    <div className="flex flex-row items-center justify-between">
-      <span className="text-xs text-light-text-secondary ml-5">{title}</span>
+    <div
+      className="flex flex-row items-center justify-between h-full"
+      onMouseEnter={handleHiddenSort}
+      onMouseLeave={handleHiddenSort}
+    >
+      <span className="text-xs text-light-text-secondary ml-5 h-full flex items-center gap-2">
+        <span>{title}</span>
+        {hiddenSort && (
+          <span className="cursor-pointer" onClick={() => handleSort()}>
+            <ArrowDownwardOutlinedIcon style={{ fontSize: "20px" }} />
+          </span>
+        )}
+      </span>
+
       {!isLast && <span className="text-gray-300">|</span>}
     </div>
   );
@@ -26,12 +56,22 @@ const Title = ({ width, title, isLast }: { width: string; title: string; isLast?
 const Roles = () => {
   const [roles, setRoles] = React.useState<ResRoles[]>([]);
   const [users, setUser] = React.useState<User[]>([]);
+
+  const handleSort = async ({ sort, order, search }: ReqSearch) => {
+    try {
+      const res = await CmsApi.getUsers({ sort, order, search });
+      setUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     CmsApi.getRoles().then((res) => {
       setRoles(res.data.data);
     });
 
-    CmsApi.getUsers().then((res) => {
+    CmsApi.getUsers({}).then((res) => {
       setUser(res.data.data);
     });
   }, []);
@@ -75,6 +115,7 @@ const Roles = () => {
               <input
                 placeholder="Search"
                 className="border outline-light-primary-light px-5 border-light-borderColor mr-5 rounded-lg w-[600px] h-10 text-light-text-secondary font-medium"
+                onChange={(e) => handleSort({ search: e.target.value })}
               ></input>
               <FormControl fullWidth style={{ width: "150px" }}>
                 <Select
@@ -110,19 +151,39 @@ const Roles = () => {
               <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
             </th>
             <th>
-              <Title title="USER" width="w-60"></Title>
+              <Title
+                handleSort={() => handleSort({ sort: "username", order: "ASC" })}
+                title="USER"
+                width="w-60"
+              ></Title>
             </th>
             <th>
-              <Title title="EMAIL" width="w-60"></Title>
+              <Title
+                handleSort={() => handleSort({ sort: "email", order: "ASC" })}
+                title="EMAIL"
+                width="w-60"
+              ></Title>
             </th>
             <th>
-              <Title title="ROLE" width="w-60"></Title>
+              <Title
+                handleSort={() => handleSort({ sort: "role", order: "ASC" })}
+                title="ROLE"
+                width="w-60"
+              ></Title>
             </th>
             <th>
-              <Title title="PHONE" width="w-60"></Title>
+              <Title
+                handleSort={() => handleSort({ sort: "phone", order: "ASC" })}
+                title="PHONE"
+                width="w-60"
+              ></Title>
             </th>
             <th>
-              <Title title="STATUS" width="w-60"></Title>
+              <Title
+                handleSort={() => handleSort({ sort: "action", order: "ASC" })}
+                title="STATUS"
+                width="w-60"
+              ></Title>
             </th>
             <th>
               <Title title="ACTIONS" width="w-60" isLast={true}></Title>

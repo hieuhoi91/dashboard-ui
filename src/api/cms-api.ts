@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { ReqLogin, ReqRegister, ResLogin, ResRegister } from "../shared/types/authType";
 import { ResCategory } from "../shared/types/categoryType";
-import { ReqItem, ResItem } from "../shared/types/itemType";
+import { ReqItem, ReqSearch, ResItem } from "../shared/types/itemType";
 import { ResGetRoles, ResGetUsers } from "../shared/types/rolesType";
 
 export const CmsApi = {
@@ -18,10 +18,11 @@ export const CmsApi = {
     return axios.get<ResGetRoles>("/api/auth/roles");
   },
 
-  getUsers: () => {
-    return axios.get<ResGetUsers>("/api/users/all?sort=created_at&order=ASC&take=8");
+  getUsers: ({ sort, order, search }: ReqSearch) => {
+    return axios.get<ResGetUsers>("/api/users/all?take=8", {
+      params: { sort, order, search },
+    });
   },
-
   createItem: (req: ReqItem) => {
     return axios.post<ResItem>("/api/item/create", req);
   },

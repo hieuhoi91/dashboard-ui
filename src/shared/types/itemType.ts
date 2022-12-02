@@ -21,3 +21,9 @@ export interface ResItem {
   updated_at: string;
   quantity: number;
 }
+
+export interface ReqSearch {
+  order?: string;
+  search?: string;
+  sort?: string;
+}
