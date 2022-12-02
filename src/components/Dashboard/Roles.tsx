@@ -1,4 +1,5 @@
 import { IosShare } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect } from "react";
 
@@ -13,11 +14,11 @@ const listImg = [
   "https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png",
 ];
 
-const Title = ({ width, title }: { width: string; title: string }) => {
+const Title = ({ width, title, isLast }: { width: string; title: string; isLast?: boolean }) => {
   return (
     <div className="flex flex-row items-center justify-between">
       <span className="text-xs text-light-text-secondary ml-5">{title}</span>
-      <span className="text-gray-300">|</span>
+      {!isLast && <span className="text-gray-300">|</span>}
     </div>
   );
 };
@@ -75,21 +76,20 @@ const Roles = () => {
                 placeholder="Search"
                 className="border outline-light-primary-light px-5 border-light-borderColor mr-5 rounded-lg w-[600px] h-10 text-light-text-secondary font-medium"
               ></input>
-              <FormControl fullWidth style={{ height: "40px", width: "150px" }}>
-                <InputLabel
-                  style={{
-                    height: "40px",
-                    top: "-8px",
-                  }}
-                  id="demo-simple-select-label"
-                >
-                  <span className=" text-light-text-secondary">Select Role</span>
-                </InputLabel>
+              <FormControl fullWidth style={{ width: "150px" }}>
                 <Select
+                  sx={{
+                    "& .MuiSelect-select .notranslate::after": "placeholder"
+                      ? {
+                          content: `"${"Select Role"}"`,
+                          opacity: 0.6,
+                          fontWeight: 400,
+                        }
+                      : {},
+                  }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   // value={age}
-                  label="Age"
                   // onChange={handleChange}
                   style={{
                     height: "40px",
@@ -107,8 +107,7 @@ const Roles = () => {
         <table className="w-full h-[85%]">
           <tr className="h-[10%] bg-light-background-body">
             <th className="w-10">
-              <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)", display: "inline" }} />
-              <span className="text-gray-300">|</span>
+              <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
             </th>
             <th>
               <Title title="USER" width="w-60"></Title>
@@ -126,20 +125,31 @@ const Roles = () => {
               <Title title="STATUS" width="w-60"></Title>
             </th>
             <th>
-              <Title title="ACTIONS" width="w-60"></Title>
+              <Title title="ACTIONS" width="w-60" isLast={true}></Title>
             </th>
           </tr>
           {users?.map((user, index) => (
             <tr className="h-[10%]">
-              <td className="w-10 pl-5">
-                <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)", display: "inline" }} />
+              <td className="w-[full] h-full flex justify-center items-center">
+                <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
               </td>
-              <td className="w-10">{user.username}</td>
-              <td className="w-20">{user.email}</td>
-              <td className="w-20">{user.role}</td>
-              <td className="w-20">{user.phone}</td>
-              <td className="w-20">{user.status}</td>
-              <td className="w-20">{user.status}</td>
+              <td className="w-20 pl-5 ">
+                <div className="flex items-center gap-2 ">
+                  <span className="w-[36px] h-[36px] rounded-full">
+                    <img className="w-full h-full rounded-full" src={user.avatar} alt="" />
+                  </span>
+                  <span>{user.username}</span>
+                </div>
+              </td>
+              <td className="w-20 pl-5">{user.email}</td>
+              <td className="w-20 pl-5">{user.role}</td>
+              <td className="w-20 pl-5">{user.phone}</td>
+              <td className="w-20 pl-5">{user.status}</td>
+              <td className="w-10 pl-10">
+                <span className="cursor-pointer">
+                  <MoreVertIcon />
+                </span>
+              </td>
             </tr>
           ))}
         </table>
