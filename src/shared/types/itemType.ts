@@ -26,4 +26,5 @@ export interface ReqSearch {
   order?: string;
   search?: string;
   sort?: string;
+  take?: number;
 }

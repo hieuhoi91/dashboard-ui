@@ -1,5 +1,4 @@
 import { IosShare } from "@mui/icons-material";
-import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Checkbox, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -8,6 +7,8 @@ import { CmsApi } from "../../api/cms-api";
 import { ReqSearch } from "../../shared/types/itemType";
 import { ResGetRoles, ResGetUsers, ResRoles, User } from "../../shared/types/rolesType";
 import { RoleCard } from "../Common/RoleCard";
+import RowsPage from "../Common/RowsPage";
+import Title from "../Common/Title";
 
 const listImg = [
   "https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png",
@@ -16,46 +17,18 @@ const listImg = [
   "https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png",
 ];
 
-const Title = ({
-  width,
-  title,
-  isLast,
-  handleSort,
-}: {
-  width: string;
-  title: string;
-  isLast?: boolean;
-  handleSort?: any;
-}) => {
-  const [hiddenSort, setHiddenSort] = useState<boolean>(false);
-
-  const handleHiddenSort = () => {
-    setHiddenSort(!hiddenSort);
-  };
-
-  return (
-    <div
-      className="flex flex-row items-center justify-between h-full"
-      onMouseEnter={handleHiddenSort}
-      onMouseLeave={handleHiddenSort}
-    >
-      <span className="text-xs text-light-text-secondary ml-5 h-full flex items-center gap-2">
-        <span>{title}</span>
-        {hiddenSort && (
-          <span className="cursor-pointer" onClick={() => handleSort()}>
-            <ArrowDownwardOutlinedIcon style={{ fontSize: "20px" }} />
-          </span>
-        )}
-      </span>
-
-      {!isLast && <span className="text-gray-300">|</span>}
-    </div>
-  );
-};
-
 const Roles = () => {
   const [roles, setRoles] = React.useState<ResRoles[]>([]);
   const [users, setUser] = React.useState<User[]>([]);
+
+  const pageUser = async ({ take }: ReqSearch) => {
+    try {
+      const res = await CmsApi.getUsers({ take });
+      setUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSort = async ({ sort, order, search }: ReqSearch) => {
     try {
@@ -77,7 +50,7 @@ const Roles = () => {
   }, []);
 
   return (
-    <div className="px-16 pt-5 h-[1080px] bg-light-background-body">
+    <div className="w-full px-16 pt-5  bg-light-background-body">
       <div className="mb-5">
         <h1 className="text-2xl font-medium text-light-text-primary">Roles List</h1>
         <span className="text-light-text-secondary">
@@ -102,8 +75,8 @@ const Roles = () => {
           Find all of your company's administrator accounts and their associate roles.
         </span>
       </div>
-      <div className="shadow-lg rounded-xl bg-white h-[60%]">
-        <div className="h-[15%]">
+      <div className="shadow-lg rounded-xl bg-white w-full ">
+        <div className="w-full h-24">
           <div className="h-[100%] flex flex-row items-center mx-5 justify-between">
             <button className="border border-light-borderColor rounded-lg w-36 h-10 text-light-text-secondary font-medium">
               <div className="flex flex-row items-center justify-center space-x-2">
@@ -145,75 +118,80 @@ const Roles = () => {
             </div>
           </div>
         </div>
-        <table className="w-full h-[85%]">
-          <tr className="h-[10%] bg-light-background-body">
-            <th className="w-10">
+        <table className="w-full">
+          <tr className="w-full h-16  bg-light-background-body grid grid-cols-11 border border-collapse">
+            <th className="col-span-1 flex justify-center items-center">
               <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
             </th>
-            <th>
+            <th className="col-span-2">
               <Title
                 handleSort={() => handleSort({ sort: "username", order: "ASC" })}
                 title="USER"
                 width="w-60"
               ></Title>
             </th>
-            <th>
+            <th className="col-span-2">
               <Title
                 handleSort={() => handleSort({ sort: "email", order: "ASC" })}
                 title="EMAIL"
                 width="w-60"
               ></Title>
             </th>
-            <th>
+            <th className="col-span-2">
               <Title
                 handleSort={() => handleSort({ sort: "role", order: "ASC" })}
                 title="ROLE"
                 width="w-60"
               ></Title>
             </th>
-            <th>
+            <th className="col-span-2">
               <Title
                 handleSort={() => handleSort({ sort: "phone", order: "ASC" })}
                 title="PHONE"
                 width="w-60"
               ></Title>
             </th>
-            <th>
+            <th className="col-span-1">
               <Title
                 handleSort={() => handleSort({ sort: "action", order: "ASC" })}
                 title="STATUS"
                 width="w-60"
               ></Title>
             </th>
-            <th>
+            <th className="col-span-1">
               <Title title="ACTIONS" width="w-60" isLast={true}></Title>
             </th>
           </tr>
-          {users?.map((user, index) => (
-            <tr className="h-[10%]">
-              <td className="w-[full] h-full flex justify-center items-center">
-                <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
-              </td>
-              <td className="w-20 pl-5 ">
-                <div className="flex items-center gap-2 ">
-                  <span className="w-[36px] h-[36px] rounded-full">
-                    <img className="w-full h-full rounded-full" src={user.avatar} alt="" />
+          <div className="w-full flex flex-col justify-between items-center">
+            {users?.map((user, index) => (
+              <tr className="w-full h-full grid grid-cols-11 border-b hover:bg-light-background-hover">
+                <td className="col-span-1 flex justify-center items-cente">
+                  <span className="flex justify-center items-center">
+                    <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
                   </span>
-                  <span>{user.username}</span>
-                </div>
-              </td>
-              <td className="w-20 pl-5">{user.email}</td>
-              <td className="w-20 pl-5">{user.role}</td>
-              <td className="w-20 pl-5">{user.phone}</td>
-              <td className="w-20 pl-5">{user.status}</td>
-              <td className="w-10 pl-10">
-                <span className="cursor-pointer">
-                  <MoreVertIcon />
-                </span>
-              </td>
-            </tr>
-          ))}
+                </td>
+                <td className="col-span-2 pl-5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="w-[36px] h-[36px] rounded-full">
+                      <img className="w-full h-full rounded-full" src={user.avatar} alt="" />
+                    </span>
+                    <span>{user.username}</span>
+                  </div>
+                </td>
+                <td className="col-span-2 pl-5 flex items-center justify-between">{user.email}</td>
+                <td className="col-span-2 pl-5 flex items-center justify-between">{user.role}</td>
+                <td className="col-span-2 pl-5 flex items-center justify-between">{user.phone}</td>
+                <td className="col-span-1 pl-5 flex items-center justify-between">{user.status}</td>
+                <td className="col-span-1 pl-10 flex items-center justify-between">
+                  <span className="cursor-pointer">
+                    <MoreVertIcon />
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </div>
         </table>
+        <RowsPage />
       </div>
     </div>
   );

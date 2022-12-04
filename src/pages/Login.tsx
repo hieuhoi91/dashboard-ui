@@ -136,10 +136,18 @@ const Login = () => {
           </form>
 
           <Social>
-            <img src="assets/svg/fb.svg" alt="" />
-            <img src="assets/svg/twitter.svg" alt="" />
-            <img src="assets/svg/github.svg" alt="" />
-            <img src="assets/svg/google.svg" alt="" />
+            <a href="https://www.facebook.com/lownsni">
+              <img src="assets/svg/fb.svg" alt="" />
+            </a>
+            <a href="">
+              <img src="assets/svg/twitter.svg" alt="" />
+            </a>
+            <a href="">
+              <img src="assets/svg/github.svg" alt="" />
+            </a>
+            <a href="">
+              <img src="assets/svg/google.svg" alt="" />
+            </a>
           </Social>
           <div className="w-full flex justify-center items-center gap-4 my-4 text-xs">
             <p>New on our platform?</p>

@@ -59,6 +59,14 @@ const Dashboard = () => {
           isEnableArrowIcon={true}
           listRoutes={ListLabels}
         />
+
+        <div className="relative w-full h-6 my-4">
+          <span className="w-[70%] h-full pl-8 text-neutral-400 font-normal text-sm">
+            APP & PAGES
+          </span>
+          <span className="absolute left-0 top-2 border-slate-300	 w-[6%] h-1 border-b "></span>
+        </div>
+
         <NavMenu
           className=""
           labelIcon={<GridViewIcon />}

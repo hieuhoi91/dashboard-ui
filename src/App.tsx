@@ -4,6 +4,7 @@ import { Route, Router, Routes } from "react-router-dom";
 
 import CRM from "./components/Dashboard/CRM";
 import ECommerce from "./components/Dashboard/ECommerce";
+import Permission from "./components/Dashboard/Permission";
 import Roles from "./components/Dashboard/Roles";
 import PrivateRoute from "./components/RequireAuth/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
@@ -63,7 +64,7 @@ const App = () => {
           }
         >
           <Route path="/roles-permission/roles" element={<Roles />} />
-          <Route path="/roles-permission/permissions" element={<CRM />} />
+          <Route path="/roles-permission/permissions" element={<Permission />} />
         </Route>
       </Routes>
     </HistoryRouter>
