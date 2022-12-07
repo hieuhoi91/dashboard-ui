@@ -2,7 +2,7 @@ import { BrowserHistory } from "history";
 import React from "react";
 import { Route, Router, Routes } from "react-router-dom";
 
-import CRM from "./components/Dashboard/CRM";
+import CreateProduct from "./components/Dashboard/CreateProduct";
 import ECommerce from "./components/Dashboard/ECommerce";
 import Permission from "./components/Dashboard/Permission";
 import Roles from "./components/Dashboard/Roles";
@@ -53,7 +53,7 @@ const App = () => {
           }
         >
           <Route path="/dashboard/ecommerce" element={<ECommerce />} />
-          <Route path="/dashboard/crm" element={<CRM />} />
+          <Route path="/dashboard/crm" element={<CreateProduct />} />
         </Route>
         <Route
           path="/roles-permission"

@@ -6,7 +6,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 
 const Search = () => {
   return (
-    <div className="w-full h-[60px] flex justify-between items-center bg-light-background-body">
+    <div className="w-full h-[60px] pr-8 flex justify-between items-center bg-light-background-body">
       <form action="" className="w-full h-full flex justify-between items-center">
         <div className="w-[60px] h-full flex justify-center items-center cursor-pointer">
           <SearchIcon />

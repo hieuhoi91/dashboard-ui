@@ -2,6 +2,8 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { FC, useState } from "react";
 
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectIsShow, selectIsSlide } from "../../features/dashboard/dashboardRouteSlice";
 import Menu from "./ListItem";
 
 export interface IRoutes {
@@ -20,6 +22,9 @@ interface INavMenu
 }
 
 const NavMenu: FC<INavMenu> = (props) => {
+  const dispatch = useAppDispatch();
+  const isShow = useAppSelector(selectIsShow);
+  const isSlide = useAppSelector(selectIsSlide);
   const { title, isEnableArrowIcon, labelIcon, listRoutes: items, ...attrs } = props;
   const [isHidden, setIsHidden] = useState(false);
 
@@ -31,20 +36,27 @@ const NavMenu: FC<INavMenu> = (props) => {
     : " flex justify-between items-center py-2 px-4 mb-2 rounded-lg cursor-pointer bg-light-background-body";
   return (
     <div className="w-full px-3 pb-2 ">
-      <div className={attrs.className + a} onClick={handleHidden}>
-        <div className="flex gap-2 items-center whitespace-nowrap">
-          <span>{labelIcon}</span>
-          <span className="">{title}</span>
+      {isShow ? (
+        <div className={attrs.className + a} onClick={handleHidden}>
+          <div className="flex gap-2 items-center whitespace-nowrap">
+            <span>{labelIcon}</span>
+            <span>{title}</span>
+          </div>
+          {isEnableArrowIcon ? (
+            !isHidden ? (
+              <KeyboardArrowRightIcon className="text-light-text-primary" />
+            ) : (
+              <KeyboardArrowDownOutlinedIcon className="text-light-text-primary" />
+            )
+          ) : null}
         </div>
-        {isEnableArrowIcon ? (
-          !isHidden ? (
-            <KeyboardArrowRightIcon className="text-light-text-primary" />
-          ) : (
-            <KeyboardArrowDownOutlinedIcon className="text-light-text-primary" />
-          )
-        ) : null}
-      </div>
-      {isHidden ? (
+      ) : (
+        <div className="flex justify-center items-center whitespace-nowrap">
+          <span className="p-2">{labelIcon}</span>
+        </div>
+      )}
+
+      {isHidden && isShow ? (
         <div className="flex flex-col">
           {items.map((item, idx) => (
             <Menu route={{ idx, ...item }} />

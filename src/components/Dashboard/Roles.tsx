@@ -7,7 +7,7 @@ import { CmsApi } from "../../api/cms-api";
 import { ReqSearch } from "../../shared/types/itemType";
 import { ResGetRoles, ResGetUsers, ResRoles, User } from "../../shared/types/rolesType";
 import { RoleCard } from "../Common/RoleCard";
-import RowsPage from "../Common/RowsPage";
+import TablePagination from "../Common/TablePagination";
 import Title from "../Common/Title";
 
 const listImg = [
@@ -20,19 +20,11 @@ const listImg = [
 const Roles = () => {
   const [roles, setRoles] = React.useState<ResRoles[]>([]);
   const [users, setUser] = React.useState<User[]>([]);
+  const [pagination, setPagination] = React.useState<any>(1);
 
-  const pageUser = async ({ take }: ReqSearch) => {
+  const handleSort = async ({ sort, order, search, take }: ReqSearch) => {
     try {
-      const res = await CmsApi.getUsers({ take });
-      setUser(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSort = async ({ sort, order, search }: ReqSearch) => {
-    try {
-      const res = await CmsApi.getUsers({ sort, order, search });
+      const res = await CmsApi.getUsers({ sort, order, search, take });
       setUser(res.data.data);
     } catch (error) {
       console.log(error);
@@ -46,11 +38,12 @@ const Roles = () => {
 
     CmsApi.getUsers({}).then((res) => {
       setUser(res.data.data);
+      setPagination(res.data.meta);
     });
   }, []);
 
   return (
-    <div className="w-full px-16 pt-5  bg-light-background-body">
+    <div className="w-full px-16 pt-10 bg-light-background-body">
       <div className="mb-5">
         <h1 className="text-2xl font-medium text-light-text-primary">Roles List</h1>
         <span className="text-light-text-secondary">
@@ -58,7 +51,7 @@ const Roles = () => {
           an administrator can have access to what he need
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-5 h-[16%]">
+      <div className="h-36 grid grid-cols-3 gap-5">
         {roles.map((item, index) => (
           <RoleCard
             title={item.user_role}
@@ -77,7 +70,7 @@ const Roles = () => {
       </div>
       <div className="shadow-lg rounded-xl bg-white w-full ">
         <div className="w-full h-24">
-          <div className="h-[100%] flex flex-row items-center mx-5 justify-between">
+          <div className="h-full flex flex-row items-center mx-5 justify-between">
             <button className="border border-light-borderColor rounded-lg w-36 h-10 text-light-text-secondary font-medium">
               <div className="flex flex-row items-center justify-center space-x-2">
                 <IosShare style={{ fontSize: "20px" }} />
@@ -164,7 +157,7 @@ const Roles = () => {
           </tr>
           <div className="w-full flex flex-col justify-between items-center">
             {users?.map((user, index) => (
-              <tr className="w-full h-full grid grid-cols-11 border-b hover:bg-light-background-hover">
+              <tr className="w-full h-16 grid grid-cols-11 border-b hover:bg-light-background-hover">
                 <td className="col-span-1 flex justify-center items-cente">
                   <span className="flex justify-center items-center">
                     <Checkbox style={{ color: "rgba(76, 78, 100, 0.68)" }} />
@@ -191,7 +184,7 @@ const Roles = () => {
             ))}
           </div>
         </table>
-        <RowsPage />
+        <TablePagination pagination={pagination.itemCount} handleSort={handleSort} />
       </div>
     </div>
   );

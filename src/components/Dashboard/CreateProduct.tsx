@@ -22,7 +22,7 @@ interface A {
   message: string;
 }
 
-const CRM = () => {
+const CreateProduct = () => {
   const [description, setDescription] = useState<any>();
   const [category, setCategory] = useState<Category[]>([]);
   const [valueCategory, setValueCategory] = useState<any>();
@@ -323,4 +323,4 @@ const CRM = () => {
   );
 };
 
-export default CRM;
+export default CreateProduct;

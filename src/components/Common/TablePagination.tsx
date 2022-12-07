@@ -1,44 +1,51 @@
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-const RowsPage = () => {
+interface ITablePagination {
+  pagination: number;
+  handleSort?: any;
+}
+
+const TablePagination: FC<ITablePagination> = ({ pagination, handleSort }) => {
   const [valuePage, setValuePage] = useState<number>(10);
-  const [valueTopPage, setValueTopPage] = useState<number>(1);
-  const [valueBottomPage, setValueBottomPage] = useState<number>(valuePage);
+  const [valueLeftPage, setValueLeftPage] = useState<number>(1);
+  const [valueRightPage, setValueRightPage] = useState<number>(valuePage);
 
   const handlePrevPage = () => {
-    if (valueTopPage <= 1) {
-      setValueTopPage(1);
-      setValueBottomPage(valueBottomPage);
+    handleSort({ take: valuePage });
+    if (valueLeftPage <= 1) {
+      setValueLeftPage(1);
+      setValueRightPage(valueRightPage);
+    } else if (valueRightPage >= pagination) {
+      setValueLeftPage(valueLeftPage - valuePage);
+      setValueRightPage(valueRightPage - (pagination % 10));
     } else {
-      setValueTopPage(valueTopPage - valuePage);
-      setValueBottomPage(valueBottomPage - valuePage);
+      setValueLeftPage(valueLeftPage - valuePage);
+      setValueRightPage(valueRightPage - valuePage);
     }
   };
 
   const handleNextPage = () => {
-    if (valueBottomPage >= 50) {
-      setValueTopPage(valueTopPage);
-      setValueBottomPage(50);
+    handleSort({ take: valuePage });
+    if (valueRightPage >= pagination) {
+      setValueLeftPage(valueLeftPage);
+      setValueRightPage(pagination);
     } else {
-      setValueTopPage(valueTopPage + valuePage);
-      setValueBottomPage(valueBottomPage + valuePage);
+      setValueLeftPage(valueLeftPage + valuePage);
+      setValueRightPage(valueRightPage + (pagination % 10));
     }
   };
 
   useEffect(() => {
-    if (valuePage == 25) {
-      setValueTopPage(26);
-      setValueBottomPage(50);
-    } else if (valuePage == 50) {
-      setValueTopPage(1);
-      setValueBottomPage(50);
+    setValueLeftPage(1);
+    if (pagination < valuePage) {
+      setValueRightPage(pagination);
     } else {
-      setValueTopPage(1);
-      setValueBottomPage(valuePage);
+      setValueRightPage(valuePage);
     }
+    handleSort({ take: valuePage });
   }, [valuePage]);
 
   return (
@@ -71,31 +78,31 @@ const RowsPage = () => {
         </Select>
       </FormControl>
       <span>
-        {valueTopPage}-{valueBottomPage} of 50
+        {valueLeftPage}-{valueRightPage} of {pagination}
       </span>
       <div className="flex justify-between items-center gap-2 pr-4">
         <span
           className={
-            valueTopPage > 1
+            valueLeftPage > 1
               ? "cursor-pointer hover:bg-gray-200 rounded-full"
               : "cursor-not-allowed" + " "
           }
         >
           <KeyboardArrowLeftOutlinedIcon
             onClick={handlePrevPage}
-            style={{ opacity: valueTopPage > 1 ? "1" : "0.3" }}
+            style={{ opacity: valueLeftPage > 1 ? "1" : "0.3" }}
           />
         </span>
         <span
           className={
-            valueBottomPage < 50
+            valueRightPage < pagination
               ? "cursor-pointer hover:bg-gray-200 rounded-full"
               : "cursor-not-allowed"
           }
         >
           <KeyboardArrowRightOutlinedIcon
             onClick={handleNextPage}
-            style={{ opacity: valueBottomPage < 50 ? "1" : "0.3" }}
+            style={{ opacity: valueRightPage < pagination ? "1" : "0.3" }}
           />
         </span>
       </div>
@@ -103,4 +110,4 @@ const RowsPage = () => {
   );
 };
 
-export default RowsPage;
+export default TablePagination;

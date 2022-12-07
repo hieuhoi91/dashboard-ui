@@ -1,10 +1,10 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CmsApi } from "../../api/cms-api";
 import { ReqSearch } from "../../shared/types/itemType";
-import { User } from "../../shared/types/rolesType";
-import RowsPage from "../Common/RowsPage";
+import { ResRoles, User } from "../../shared/types/rolesType";
+import TablePagination from "../Common/TablePagination";
 import Title from "../Common/Title";
 
 const Permission = () => {
@@ -19,6 +19,12 @@ const Permission = () => {
     }
   };
 
+  useEffect(() => {
+    CmsApi.getUsers({}).then((res) => {
+      setUser(res.data.data);
+    });
+  }, []);
+
   return (
     <div className="w-full h-full px-16 pt-5  bg-light-background-body">
       <div className="mb-5">
@@ -29,7 +35,7 @@ const Permission = () => {
         </span>
       </div>
       <div className="shadow-lg rounded-xl bg-white w-full">
-        <table className="w-full ">
+        <table className="w-full">
           <div className="w-full h-24 flex justify-between items-center px-5">
             <input
               placeholder="Search Permission"
@@ -73,7 +79,7 @@ const Permission = () => {
           </tr>
           <div className="w-full flex flex-col justify-between items-center">
             {users?.map((user, index) => (
-              <tr className="w-full h-full grid grid-cols-8 border-b hover:bg-light-background-hover">
+              <tr className="w-full h-16 grid grid-cols-8 border-b hover:bg-light-background-hover">
                 <td className="col-span-2 pl-5 flex items-center justify-between">
                   {user.username}
                 </td>
@@ -90,7 +96,7 @@ const Permission = () => {
             ))}
           </div>
         </table>
-        <RowsPage />
+        <TablePagination />
       </div>
     </div>
   );

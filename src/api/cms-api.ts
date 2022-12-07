@@ -19,7 +19,7 @@ export const CmsApi = {
   },
 
   getUsers: ({ sort, order, search, take }: ReqSearch) => {
-    return axios.get<ResGetUsers>("/api/users/all?take=6", {
+    return axios.get<ResGetUsers>("/api/users/all", {
       params: { sort, order, search, take },
     });
   },
