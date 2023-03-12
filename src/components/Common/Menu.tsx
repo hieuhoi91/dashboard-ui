@@ -2,8 +2,8 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { FC, useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectIsShow, selectIsSlide } from "../../features/dashboard/dashboardRouteSlice";
+import { useAppSelector } from "../../app/hooks";
+import { selectIsShow } from "../../features/dashboard/dashboardRouteSlice";
 import Menu from "./ListItem";
 
 export interface IRoutes {
@@ -22,9 +22,7 @@ interface INavMenu
 }
 
 const NavMenu: FC<INavMenu> = (props) => {
-  const dispatch = useAppDispatch();
   const isShow = useAppSelector(selectIsShow);
-  const isSlide = useAppSelector(selectIsSlide);
   const { title, isEnableArrowIcon, labelIcon, listRoutes: items, ...attrs } = props;
   const [isHidden, setIsHidden] = useState(false);
 
